@@ -19,11 +19,30 @@ import time
 # Add modules to path
 sys.path.append(str(Path(__file__).parent / "modules"))
 
-# Import JARVIS modules
-from voice_engine import VoiceEngine
-from intent_parser import IntentParser
-from action_executor import ActionExecutor
-from ai_brain import AIBrain
+# Import JARVIS modules (with fallbacks for missing dependencies)
+try:
+    from voice_engine import VoiceEngine
+except ImportError as e:
+    print(f"⚠️ Could not import VoiceEngine: {e}")
+    VoiceEngine = None
+
+try:
+    from intent_parser import IntentParser
+except ImportError as e:
+    print(f"⚠️ Could not import IntentParser: {e}")
+    IntentParser = None
+
+try:
+    from action_executor import ActionExecutor
+except ImportError as e:
+    print(f"⚠️ Could not import ActionExecutor: {e}")
+    ActionExecutor = None
+
+try:
+    from ai_brain import AIBrain
+except ImportError as e:
+    print(f"⚠️ Could not import AIBrain: {e}")
+    AIBrain = None
 
 # Workspace roots and helpers for safe file access
 ROOT_DIR = Path(__file__).parent.resolve()
@@ -74,24 +93,28 @@ action_executor = None
 ai_brain = None
 
 try:
-    voice_engine = VoiceEngine()
+    voice_engine = VoiceEngine() if VoiceEngine else None
 except Exception as e:
     print(f"⚠️ Voice engine failed: {e}")
+    voice_engine = None
 
 try:
-    intent_parser = IntentParser()
+    intent_parser = IntentParser() if IntentParser else None
 except Exception as e:
     print(f"⚠️ Intent parser failed: {e}")
+    intent_parser = None
 
 try:
-    action_executor = ActionExecutor()
+    action_executor = ActionExecutor() if ActionExecutor else None
 except Exception as e:
     print(f"⚠️ Action executor failed: {e}")
+    action_executor = None
 
 try:
-    ai_brain = AIBrain()
+    ai_brain = AIBrain() if AIBrain else None
 except Exception as e:
     print(f"⚠️ AI brain failed: {e}")
+    ai_brain = None
 
 print("✅ JARVIS components initialized (with fallbacks for unavailable features)")
 
