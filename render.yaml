@@ -7,7 +7,7 @@ services:
     name: jarvis
     runtime: python
     buildCommand: |
-      npm install --prefix jarvis-frontend && npm run build --prefix jarvis-frontend && pip install -r jarvis-ai/requirements-render.txt
+      cd jarvis-frontend && npm install && npm run build && cd .. && pip install -r jarvis-ai/requirements-render.txt
     startCommand: cd jarvis-ai && gunicorn api_server:app --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
