@@ -30,6 +30,14 @@ ROOT_DIR = Path(__file__).parent.resolve()
 WEB_DIR = ROOT_DIR / "web"
 FRONTEND_DIR = ROOT_DIR.parent / "jarvis-frontend"
 FRONTEND_DIST = FRONTEND_DIR / "dist"
+
+# Check multiple possible dist locations (for Render deployment)
+if not FRONTEND_DIST.exists():
+    # Try relative to repo root (Render builds from repo root)
+    alt_dist = ROOT_DIR.parent / "jarvis-frontend" / "dist"
+    if alt_dist.exists():
+        FRONTEND_DIST = alt_dist
+
 EXCLUDED_DIRS = {'.git', '.venv', '__pycache__', '.vscode'}
 
 

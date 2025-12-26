@@ -1,36 +1,18 @@
-# Render Blueprint - Deploy both services together
+# Render Blueprint - Single Full Stack Service
 # https://render.com/docs/blueprint-spec
 
 services:
-  # Backend API Service
+  # Full Stack Service (Backend serves Frontend)
   - type: web
-    name: jarvis-api
+    name: jarvis
     runtime: python
-    rootDir: jarvis-ai
-    buildCommand: pip install -r requirements-render.txt
-    startCommand: gunicorn api_server:app --bind 0.0.0.0:$PORT
+    buildCommand: |
+      cd jarvis-frontend && npm install && npm run build && cd ../jarvis-ai && pip install -r requirements-render.txt
+    startCommand: cd jarvis-ai && gunicorn api_server:app --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
-    healthCheckPath: /api/health
-    plan: free
-
-  # Frontend Service (Static Site)
-  - type: web
-    name: jarvis-frontend
-    runtime: static
-    rootDir: jarvis-frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: dist
-    envVars:
       - key: NODE_VERSION
         value: 20
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: no-cache
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    healthCheckPath: /api/health
     plan: free
