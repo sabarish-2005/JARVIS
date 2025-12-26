@@ -933,9 +933,10 @@ if __name__ == '__main__':
     browser_thread.start()
     
     # Run the Flask app with use_reloader=False to prevent double initialization crashes
+    port = int(os.environ.get('PORT', 5000))
     app.run(
         host='0.0.0.0',
-        port=5000,
+        port=port,
         debug=False,  # Disable debug mode for stability
         threaded=True,
         use_reloader=False  # Prevent reloader from causing issues

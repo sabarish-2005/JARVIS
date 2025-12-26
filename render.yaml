@@ -6,8 +6,9 @@ services:
   - type: web
     name: jarvis
     runtime: python
-    buildCommand: cd $RENDER_GIT_REPO_DIR/jarvis-frontend && npm install && npm run build && cd $RENDER_GIT_REPO_DIR/jarvis-ai && pip install -r requirements-render.txt
-    startCommand: cd $RENDER_GIT_REPO_DIR/jarvis-ai && gunicorn api_server:app --bind 0.0.0.0:$PORT
+    rootDir: .
+    buildCommand: cd jarvis-frontend && npm install && npm run build && cd ../jarvis-ai && pip install -r requirements-render.txt
+    startCommand: cd jarvis-ai && python api_server.py
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
