@@ -152,32 +152,32 @@ def build_frontend():
                 continue
         
         print(f"Using package manager: {npm_cmd}")
-            
-            # Install dependencies if needed
-            node_modules = FRONTEND_DIR / "node_modules"
-            if not node_modules.exists():
-                print("📥 Installing dependencies...")
-                subprocess.run(
-                    [npm_cmd, "install"],
-                    cwd=str(FRONTEND_DIR),
-                    shell=True,
-                    check=True
-                )
-            
-            # Build the frontend
-            print("🔨 Running build...")
+        
+        # Install dependencies if needed
+        node_modules = FRONTEND_DIR / "node_modules"
+        if not node_modules.exists():
+            print("📥 Installing dependencies...")
             subprocess.run(
-                [npm_cmd, "run", "build"],
+                [npm_cmd, "install"],
                 cwd=str(FRONTEND_DIR),
                 shell=True,
                 check=True
             )
-            print("✅ Frontend built successfully!")
-            return True
-        except subprocess.CalledProcessError as e:
-            print(f"❌ Build failed: {e}")
-            return False
-        except Exception as e:
+        
+        # Build the frontend
+        print("🔨 Running build...")
+        subprocess.run(
+            [npm_cmd, "run", "build"],
+            cwd=str(FRONTEND_DIR),
+            shell=True,
+            check=True
+        )
+        print("✅ Frontend built successfully!")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Build failed: {e}")
+        return False
+    except Exception as e:
             print(f"❌ Build error: {e}")
             return False
     else:
