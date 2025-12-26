@@ -50,12 +50,14 @@ WEB_DIR = ROOT_DIR / "web"
 FRONTEND_DIR = ROOT_DIR.parent / "jarvis-frontend"
 FRONTEND_DIST = FRONTEND_DIR / "dist"
 
-# Check multiple possible dist locations (for Render deployment)
-if not FRONTEND_DIST.exists():
-    # Try relative to repo root (Render builds from repo root)
-    alt_dist = ROOT_DIR.parent / "jarvis-frontend" / "dist"
-    if alt_dist.exists():
-        FRONTEND_DIST = alt_dist
+# Debug: Print paths for troubleshooting on Render
+if os.environ.get('RENDER'):
+    print(f"🔍 ROOT_DIR: {ROOT_DIR}")
+    print(f"🔍 FRONTEND_DIR: {FRONTEND_DIR}")
+    print(f"🔍 FRONTEND_DIST: {FRONTEND_DIST}")
+    print(f"🔍 FRONTEND_DIST exists: {FRONTEND_DIST.exists()}")
+    if FRONTEND_DIST.exists():
+        print(f"🔍 Files in FRONTEND_DIST: {list(FRONTEND_DIST.iterdir())[:5]}")
 
 EXCLUDED_DIRS = {'.git', '.venv', '__pycache__', '.vscode'}
 
