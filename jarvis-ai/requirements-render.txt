@@ -14,7 +14,7 @@ SQLAlchemy==2.0.23
 Flask-SQLAlchemy==3.1.1
 
 # Authentication (optional, for production)
-PyJWT==2.8.1
+PyJWT==2.10.1
 
 # Utilities
 python-multipart==0.0.6
