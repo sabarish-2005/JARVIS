@@ -47,10 +47,17 @@ except ImportError as e:
 # Workspace roots and helpers for safe file access
 ROOT_DIR = Path(__file__).parent.resolve()
 WEB_DIR = ROOT_DIR / "web"
-FRONTEND_DIR = ROOT_DIR.parent / "jarvis-frontend"
-FRONTEND_DIST = FRONTEND_DIR / "dist"
 
-# Debug: Print paths for troubleshooting on Render
+# For Render deployment, check local frontend-dist first (copied during build)
+if (ROOT_DIR / "frontend-dist").exists():
+    FRONTEND_DIST = ROOT_DIR / "frontend-dist"
+    FRONTEND_DIR = ROOT_DIR.parent / "jarvis-frontend"
+else:
+    # Local development path
+    FRONTEND_DIR = ROOT_DIR.parent / "jarvis-frontend"
+    FRONTEND_DIST = FRONTEND_DIR / "dist"
+
+# Debug: Print paths for troubleshooting
 if os.environ.get('RENDER'):
     print(f"🔍 ROOT_DIR: {ROOT_DIR}")
     print(f"🔍 FRONTEND_DIR: {FRONTEND_DIR}")
