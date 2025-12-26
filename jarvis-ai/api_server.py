@@ -123,6 +123,15 @@ print("✅ JARVIS components initialized (with fallbacks for unavailable feature
 
 def build_frontend():
     """Build React frontend if needed"""
+    # Check if we're on Render (production) - skip building, should already be built
+    if os.environ.get('RENDER'):
+        if FRONTEND_DIST.exists() and (FRONTEND_DIST / "index.html").exists():
+            print("✅ Frontend already built (production)")
+            return True
+        else:
+            print("⚠️ Frontend not found - should have been built during deploy")
+            return False
+    
     if not FRONTEND_DIR.exists():
         print("⚠️ Frontend directory not found at:", FRONTEND_DIR)
         return False
@@ -133,12 +142,17 @@ def build_frontend():
     if not index_html.exists():
         print("📦 Building React frontend...")
         try:
-            # Try npm first, then bun
+            # Detect available package manager
             npm_cmd = "npm"
-            try:
-                subprocess.run([npm_cmd, "--version"], capture_output=True, check=True, shell=True)
-            except:
-                npm_cmd = "bun"
+            for cmd in ["npm", "bun", "yarn"]:
+                try:
+                    result = subprocess.run([cmd, "--version"], capture_output=True, check=True, shell=True)
+                    npm_cmd = cmd
+                    break
+                except:
+                    continue
+            
+            print(f"Using package manager: {npm_cmd}")
             
             # Install dependencies if needed
             node_modules = FRONTEND_DIR / "node_modules"
