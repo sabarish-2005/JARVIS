@@ -1,0 +1,22 @@
+# ==================== JARVIS API - Additional Dependencies ====================
+# Install these on top of requirements-python.txt
+
+# Flask API Framework
+flask==3.0.0
+flask-cors==4.0.0
+gunicorn==21.2.0
+
+# WebSocket support (optional, for real-time communication)
+python-socketio==5.10.0
+python-engineio==4.8.0
+
+# Database support (optional)
+SQLAlchemy==2.0.23
+Flask-SQLAlchemy==3.1.1
+
+# Authentication (optional, for production)
+PyJWT==2.8.1
+cryptography==41.0.7
+
+# Utilities
+python-multipart==0.0.6

@@ -1,0 +1,465 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Tony Stark Lab HUD - Arc Reactor Blue Theme */
+    --background: 220 30% 4%;
+    --foreground: 195 100% 70%;
+
+    --card: 220 40% 6%;
+    --card-foreground: 195 100% 70%;
+
+    --popover: 220 40% 6%;
+    --popover-foreground: 195 100% 70%;
+
+    --primary: 195 100% 55%;
+    --primary-foreground: 220 30% 4%;
+
+    --secondary: 210 100% 70%;
+    --secondary-foreground: 220 30% 4%;
+
+    --muted: 220 30% 12%;
+    --muted-foreground: 195 60% 50%;
+
+    --accent: 180 100% 60%;
+    --accent-foreground: 220 30% 4%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 195 100% 30%;
+    --input: 195 100% 20%;
+    --ring: 195 100% 55%;
+
+    --radius: 0.5rem;
+
+    /* Arc Reactor specific tokens */
+    --arc-glow: 195 100% 55%;
+    --arc-glow-bright: 195 100% 70%;
+    --arc-glow-dim: 195 80% 35%;
+    --arc-white: 195 50% 90%;
+    --arc-dark: 220 40% 3%;
+    --arc-panel: 220 40% 8%;
+    --arc-border-glow: 0 0 30px hsl(195 100% 55% / 0.6);
+    --arc-text-glow: 0 0 15px hsl(195 100% 55% / 0.9);
+  }
+
+  .dark {
+    --background: 220 30% 4%;
+    --foreground: 195 100% 70%;
+
+    --card: 220 40% 6%;
+    --card-foreground: 195 100% 70%;
+
+    --popover: 220 40% 6%;
+    --popover-foreground: 195 100% 70%;
+
+    --primary: 195 100% 55%;
+    --primary-foreground: 220 30% 4%;
+
+    --secondary: 210 100% 70%;
+    --secondary-foreground: 220 30% 4%;
+
+    --muted: 220 30% 12%;
+    --muted-foreground: 195 60% 50%;
+
+    --accent: 180 100% 60%;
+    --accent-foreground: 220 30% 4%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 195 100% 30%;
+    --input: 195 100% 20%;
+    --ring: 195 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-orbitron;
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  /* Arc Reactor Glow Effects */
+  .arc-glow {
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.9),
+                 0 0 20px hsl(var(--primary) / 0.7),
+                 0 0 40px hsl(var(--primary) / 0.5),
+                 0 0 80px hsl(var(--primary) / 0.3);
+  }
+
+  .arc-glow-subtle {
+    text-shadow: 0 0 8px hsl(var(--primary) / 0.6),
+                 0 0 16px hsl(var(--primary) / 0.4);
+  }
+
+  .arc-border-glow {
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.4),
+                0 0 30px hsl(var(--primary) / 0.2),
+                inset 0 0 15px hsl(var(--primary) / 0.1);
+  }
+
+  .arc-border-glow-strong {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.6),
+                0 0 40px hsl(var(--primary) / 0.3),
+                0 0 60px hsl(var(--primary) / 0.2),
+                inset 0 0 20px hsl(var(--primary) / 0.15);
+  }
+
+  /* Holographic Panel Styles */
+  .holo-panel {
+    @apply bg-card/60 backdrop-blur-md border border-primary/20 rounded-lg;
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.15),
+                inset 0 1px 0 hsl(var(--primary) / 0.2),
+                inset 0 0 30px hsl(var(--primary) / 0.05);
+  }
+
+  .holo-panel-floating {
+    @apply bg-card/40 backdrop-blur-lg border border-primary/30 rounded-xl;
+    box-shadow: 0 8px 32px hsl(var(--primary) / 0.2),
+                0 0 60px hsl(var(--primary) / 0.1),
+                inset 0 1px 0 hsl(var(--primary) / 0.3);
+    animation: float-panel 6s ease-in-out infinite;
+  }
+
+  /* HUD Grid and Scanlines */
+  .hud-grid {
+    background-image: 
+      radial-gradient(ellipse at center, hsl(var(--primary) / 0.03) 0%, transparent 70%),
+      linear-gradient(hsl(var(--primary) / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 60px 60px, 60px 60px;
+  }
+
+  .hud-scanline {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--primary) / 0.02) 2px,
+      hsl(var(--primary) / 0.02) 4px
+    );
+    animation: scanline-move 8s linear infinite;
+  }
+
+  /* Radar sweep */
+  .radar-sweep {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      hsl(var(--primary) / 0.4) 30deg,
+      transparent 60deg
+    );
+    animation: radar-rotate 4s linear infinite;
+  }
+
+  /* Scanning line */
+  .scan-line-vertical {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      hsl(var(--primary) / 0.8) 50%,
+      transparent 100%
+    );
+    animation: scan-vertical 3s ease-in-out infinite;
+  }
+
+  .scan-line-horizontal {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--primary) / 0.6) 50%,
+      transparent 100%
+    );
+    animation: scan-horizontal 4s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  /* Rotation animations */
+  .animate-rotate-slow {
+    animation: rotate-slow 20s linear infinite;
+  }
+
+  .animate-rotate-medium {
+    animation: rotate-slow 12s linear infinite;
+  }
+
+  .animate-rotate-fast {
+    animation: rotate-slow 6s linear infinite;
+  }
+
+  .animate-rotate-reverse {
+    animation: rotate-reverse 15s linear infinite;
+  }
+
+  .animate-rotate-reverse-slow {
+    animation: rotate-reverse 25s linear infinite;
+  }
+
+  .animate-rotate-reverse-fast {
+    animation: rotate-reverse 8s linear infinite;
+  }
+
+  /* Pulse and glow animations */
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow-fast {
+    animation: pulse-glow-intense 1s ease-in-out infinite;
+  }
+
+  .animate-reactor-pulse {
+    animation: reactor-pulse 3s ease-in-out infinite;
+  }
+
+  .animate-reactor-active {
+    animation: reactor-active 0.5s ease-in-out infinite;
+  }
+
+  /* Float animations */
+  .animate-float {
+    animation: float-panel 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-panel 6s ease-in-out infinite 2s;
+  }
+
+  /* Fade and scale */
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.4s ease-out forwards;
+  }
+
+  /* Waveform */
+  .animate-waveform {
+    animation: waveform 0.4s ease-in-out infinite alternate;
+  }
+
+  /* Blink cursor */
+  .animate-blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  /* Particle animations */
+  .animate-particle-float {
+    animation: particle-float 4s ease-in-out infinite;
+  }
+
+  /* Glitch effect */
+  .animate-glitch {
+    animation: glitch 0.3s ease-in-out;
+  }
+}
+
+/* Keyframe definitions */
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotate-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.8));
+  }
+  50% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 40px hsl(var(--primary) / 1));
+  }
+}
+
+@keyframes pulse-glow-intense {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 30px hsl(var(--primary) / 0.9));
+  }
+  50% {
+    opacity: 0.9;
+    filter: drop-shadow(0 0 60px hsl(var(--primary) / 1));
+  }
+}
+
+@keyframes reactor-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.6),
+                0 0 80px hsl(var(--primary) / 0.4),
+                inset 0 0 30px hsl(var(--primary) / 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.95;
+    box-shadow: 0 0 60px hsl(var(--primary) / 0.8),
+                0 0 120px hsl(var(--primary) / 0.5),
+                inset 0 0 50px hsl(var(--primary) / 0.4);
+  }
+}
+
+@keyframes reactor-active {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 60px hsl(var(--primary) / 0.9),
+                0 0 120px hsl(var(--primary) / 0.6);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 80px hsl(var(--primary) / 1),
+                0 0 160px hsl(var(--primary) / 0.8);
+  }
+}
+
+@keyframes float-panel {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes waveform {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes scanline-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+@keyframes radar-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes scan-vertical {
+  0%, 100% { transform: translateY(-100%); opacity: 0; }
+  50% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scan-horizontal {
+  0%, 100% { transform: translateX(-100%); opacity: 0; }
+  50% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) scale(1.1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-40px) translateX(-5px) scale(0.9);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateY(-20px) translateX(-15px) scale(1.05);
+    opacity: 0.7;
+  }
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Ring data tick marks */
+.ring-ticks {
+  background-image: repeating-conic-gradient(
+    from 0deg,
+    hsl(var(--primary) / 0.6) 0deg 2deg,
+    transparent 2deg 10deg
+  );
+}
+
+.ring-ticks-sparse {
+  background-image: repeating-conic-gradient(
+    from 0deg,
+    hsl(var(--primary) / 0.4) 0deg 1deg,
+    transparent 1deg 15deg
+  );
+}
+
+/* Hexagon shape */
+.hexagon-clip {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Circle data markers */
+.data-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 8deg,
+    hsl(var(--primary) / 0.3) 8deg,
+    hsl(var(--primary) / 0.3) 10deg
+  );
+  mask: radial-gradient(
+    transparent 48%,
+    black 49%,
+    black 51%,
+    transparent 52%
+  );
+}

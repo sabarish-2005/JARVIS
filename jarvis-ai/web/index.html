@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JARVIS Control Panel</title>
+  <link rel="stylesheet" href="/web/style.css">
+</head>
+<body>
+  <header>
+    <div class="title">JARVIS Control Panel</div>
+    <div class="status" id="status">Checking...</div>
+    <div class="links">
+      <a href="/files" target="_blank">Browse Files</a>
+      <a href="/api/health" target="_blank">Health JSON</a>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Chat with JARVIS</h2>
+      <div class="log" id="chat-log"></div>
+      <div class="row">
+        <input id="chat-input" type="text" placeholder="Ask anything" />
+        <button id="chat-send">Send</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Command Executor</h2>
+      <div class="row">
+        <input id="cmd-input" type="text" placeholder="e.g., play lo-fi on youtube" />
+        <button id="cmd-run">Run</button>
+      </div>
+      <pre class="output" id="cmd-output"></pre>
+    </section>
+
+    <section>
+      <h2>Quick Actions</h2>
+      <div class="actions">
+        <button data-action="volume_up">Volume Up</button>
+        <button data-action="volume_down">Volume Down</button>
+        <button data-action="mute">Mute</button>
+        <button data-action="time">What time?</button>
+        <button data-action="date">What date?</button>
+      </div>
+      <pre class="output" id="actions-output"></pre>
+    </section>
+
+    <section>
+      <h2>Supported Actions</h2>
+      <div id="actions-list" class="chips"></div>
+    </section>
+  </main>
+
+  <script src="/web/app.js"></script>
+</body>
+</html>
