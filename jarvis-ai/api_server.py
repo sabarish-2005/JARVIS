@@ -178,11 +178,8 @@ def build_frontend():
         print(f"❌ Build failed: {e}")
         return False
     except Exception as e:
-            print(f"❌ Build error: {e}")
-            return False
-    else:
-        print("✅ Frontend already built")
-        return True
+        print(f"❌ Build error: {e}")
+        return False
 
 
 # ==================== SERVE REACT FRONTEND ====================
